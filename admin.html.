@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northstar Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5fa;
+      margin: 0;
+      padding: 20px;
+      color: #172b43;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 30px auto;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #00000010;
+    }
+
+    h1, h2 { margin-top: 0; }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 14px;
+      border: 1px solid #ccd5e0;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 11px 15px;
+      margin: 5px 5px 5px 0;
+      border: 0;
+      border-radius: 7px;
+      color: white;
+      background: #1769aa;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .reject { background: #b42318; }
+    .logout { background: #526274; }
+    .comment {
+      border: 1px solid #dce3eb;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .muted { color: #667085; font-size: 14px; }
+    #dashboard { display: none; }
+    #message { overflow-wrap: anywhere; }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <section class="card">
+    <h1>Northstar Admin</h1>
+    <p>Private customer comment review</p>
+    <p id="message" role="status"></p>
+  </section>
+
+  <section class="card" id="login">
+    <h2>Admin Login</h2>
+
+    <label for="email">Admin email</label>
+    <input id="email" type="email" autocomplete="username" required>
+
+    <label for="password">Password</label>
+    <input id="password" type="password"
+           autocomplete="current-password" required>
+
+    <button id="loginButton" type="button">Sign In</button>
+  </section>
+
+  <section class="card" id="dashboard">
+    <h2>Customer Comments</h2>
+    <p class="muted">
+      Review comments before publishing. Approve only genuine
+      customer experiences.
+    </p>
+
+    <button id="refreshButton" type="button">Refresh</button>
+    <button id="logoutButton" class="logout" type="button">
+      Sign Out
+    </button>
+
+    <div id="comments"></div>
+  </section>
+
+</div>
+
+<script>
+  const SUPABASE_URL =
+    "https://iffyvqdeyzekenjswnep.supabase.co";
+
+  // Replace this with your Supabase publishable/anon key.
+  // Never put a service-role or secret key in this file.
+  const SUPABASE_PUBLIC_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
+  const client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLIC_KEY
+  );
+
+  const message = document.getElementById("message");
+  const login = document.getElementById("login");
+  const dashboard = document.getElementById("dashboard");
+  const comments = document.getElementById("comments");
+
+  function showMessage(text) {
+    message.textContent = text;
+  }
+
+  async function checkAdmin() {
+    const { data: { user }, error } = await client.auth.getUser();
+
+    if (error || !user) {
+      login.style.display = "block";
+      dashboard.style.display = "none";
+      return false;
+    }
+
+    const { data, error: adminError } = await client
+      .from("comment_admins")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (adminError || !data) {
+      await client.auth.signOut();
+      login.style.display = "block";
+      dashboard.style.display = "none";
+      showMessage("This account is not authorized as an admin.");
+      return false;
+    }
+
+    login.style.display = "none";
+    dashboard.style.display = "block";
+    showMessage("Signed in as an authorized admin.");
+    return true;
+  }
+
+  async function signIn() {
+    if (SUPABASE_PUBLIC_KEY.includes("PASTE_")) {
+      showMessage("Add your Supabase publishable key first.");
+      return;
+    }
+
+    showMessage("Signing in...");
+
+    const { error } = await client.auth.signInWithPassword({
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value
+    });
+
+    if (error) {
+      showMessage("Sign-in failed: " + error.message);
+      return;
+    }
+
+    if (await checkAdmin()) {
+      await loadComments();
+    }
+  }
+
+  async function loadComments() {
+    comments.textContent = "Loading comments...";
+
+    const { data, error } = await client
+      .from("customer_comments")
+      .select("id, customer_name, comment, status, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      comments.textContent = "Could not load comments: " + error.message;
+      return;
+    }
+
+    comments.replaceChildren();
+
+    if (!data.length) {
+      comments.textContent = "No comments have been submitted yet.";
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "comment";
+
+      const name = document.createElement("strong");
+      name.textContent = item.customer_name;
+
+      const status = document.createElement("p");
+      status.textContent = "Status: " + item.status;
+
+      const body = document.createElement("p");
+      body.textContent = item.comment;
+
+      const date = document.createElement("p");
+      date.className = "muted";
+      date.textContent = new Date(item.created_at).toLocaleString();
+
+      card.append(name, status, body, date);
+
+      if (item.status === "pending") {
+        const approve = document.createElement("button");
+        approve.textContent = "Approve";
+        approve.addEventListener("click", () =>
+          updateStatus(item.id, "approved")
+        );
+
+        const reject = document.createElement("button");
+        reject.textContent = "Reject";
+        reject.className = "reject";
+        reject.addEventListener("click", () =>
+          updateStatus(item.id, "rejected")
+        );
+
+        card.append(approve, reject);
+      }
+
+      comments.append(card);
+    });
+  }
+
+  async function updateStatus(id, status) {
+    if (!(await checkAdmin())) return;
+
+    const { error } = await client
+      .from("customer_comments")
+      .update({ status })
+      .eq("id", id);
+
+    if (error) {
+      showMessage("Update failed: " + error.message);
+      return;
+    }
+
+    showMessage("Comment status updated.");
+    await loadComments();
+  }
+
+  document.getElementById("loginButton").addEventListener(
+    "click", signIn
+  );
+
+  document.getElementById("refreshButton").addEventListener(
+    "click", loadComments
+  );
+
+  document.getElementById("logoutButton").addEventListener(
+    "click", async () => {
+      await client.auth.signOut();
+      login.style.display = "block";
+      dashboard.style.display = "none";
+      comments.replaceChildren();
+      showMessage("You have signed out.");
+    }
+  );
+
+  client.auth.onAuthStateChange(() => {
+    // Login state is checked by the explicit sign-in flow.
+  });
+</script>
+</body>
+</html>
