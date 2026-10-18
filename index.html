@@ -1,71 +1,256 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Northstar Loans</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #17243a;
-    }
-    header {
-      background: #102b50;
-      color: white;
-      padding: 24px;
-      text-align: center;
-    }
-    main {
-      max-width: 600px;
-      margin: 45px auto;
-      padding: 24px;
-      text-align: center;
-    }
-    .panel {
-      background: white;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px #00000012;
-    }
-    button {
-      background: #1769e0;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 14px 24px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .notice {
-      font-size: 13px;
-      color: #5b6575;
-      margin-top: 24px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Northstar Loans</h1>
-    <p>Your loan journey starts here</p>
-  </header>
-
-  <main>
-    <div class="panel">
-      <h2>Welcome to Northstar</h2>
-      <p>Explore loan options, submit applications,
-      and track your application status.</p>
-      <button onclick="alert('Loan application features will be added next.')">
-        Explore Loan Options
-      </button>
-      <p class="notice">
-        Loan eligibility, terms, fees, and approval
-        are subject to verification.
-      </p>
-    </div>
-  </main>
-</body>
-  </html>
-  
+‎  
+‎<!DOCTYPE html>
+‎<html lang="en">
+‎<head>
+‎  <meta charset="UTF-8">
+‎  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎  <title>Northstar Loans Philippines</title>
+‎
+‎  <style>
+‎    * {
+‎      box-sizing: border-box;
+‎    }
+‎
+‎    body {
+‎      margin: 0;
+‎      font-family: Arial, sans-serif;
+‎      background: #f3f6fb;
+‎      color: #1f2937;
+‎      line-height: 1.6;
+‎    }
+‎
+‎    header {
+‎      background: #102a43;
+‎      color: white;
+‎      padding: 22px 16px;
+‎      text-align: center;
+‎    }
+‎
+‎    header h1 {
+‎      margin: 0;
+‎      font-size: 28px;
+‎    }
+‎
+‎    header p {
+‎      margin: 5px 0 0;
+‎      color: #d9e6f2;
+‎    }
+‎
+‎    nav {
+‎      background: #ffffff;
+‎      padding: 13px;
+‎      text-align: center;
+‎      border-bottom: 1px solid #dce3eb;
+‎    }
+‎
+‎    nav a {
+‎      color: #102a43;
+‎      text-decoration: none;
+‎      font-weight: bold;
+‎    }
+‎
+‎    main {
+‎      max-width: 720px;
+‎      margin: 28px auto;
+‎      padding: 0 16px;
+‎    }
+‎
+‎    .card {
+‎      background: white;
+‎      padding: 24px;
+‎      margin-bottom: 22px;
+‎      border-radius: 14px;
+‎      box-shadow: 0 4px 16px rgba(16, 42, 67, 0.07);
+‎    }
+‎
+‎    h2 {
+‎      color: #102a43;
+‎      margin-top: 0;
+‎    }
+‎
+‎    .button {
+‎      display: inline-block;
+‎      background: #1769aa;
+‎      color: white;
+‎      padding: 12px 20px;
+‎      border: none;
+‎      border-radius: 8px;
+‎      font-size: 16px;
+‎      font-weight: bold;
+‎      text-decoration: none;
+‎      cursor: pointer;
+‎    }
+‎
+‎    .button:hover {
+‎      background: #12558b;
+‎    }
+‎
+‎    label {
+‎      display: block;
+‎      margin-top: 16px;
+‎      margin-bottom: 6px;
+‎      font-weight: bold;
+‎    }
+‎
+‎    input,
+‎    select,
+‎    textarea {
+‎      width: 100%;
+‎      padding: 12px;
+‎      border: 1px solid #cbd5e1;
+‎      border-radius: 8px;
+‎      font-size: 16px;
+‎      background: white;
+‎    }
+‎
+‎    textarea {
+‎      min-height: 90px;
+‎      resize: vertical;
+‎    }
+‎
+‎    .notice {
+‎      background: #fff7e6;
+‎      border-left: 4px solid #d99000;
+‎      padding: 12px;
+‎      border-radius: 6px;
+‎      font-size: 14px;
+‎    }
+‎
+‎    #result {
+‎      display: none;
+‎      margin-top: 18px;
+‎      padding: 14px;
+‎      background: #e8f5e9;
+‎      border-radius: 8px;
+‎    }
+‎
+‎    footer {
+‎      text-align: center;
+‎      padding: 24px 16px;
+‎      color: #64748b;
+‎      font-size: 14px;
+‎    }
+‎  </style>
+‎</head>
+‎
+‎<body>
+‎
+‎  <header>
+‎    <h1>Northstar Loans</h1>
+‎    <p>Loan application information for the Philippines</p>
+‎  </header>
+‎
+‎  <nav>
+‎    <a href="#home">Home</a> |
+‎    <a href="#apply">Apply for a Loan</a>
+‎  </nav>
+‎
+‎  <main>
+‎    <section class="card" id="home">
+‎      <h2>Your loan journey starts here</h2>
+‎
+‎      <p>
+‎        Welcome to Northstar Loans. Explore our loan application
+‎        preview and prepare the details you may need for an application.
+‎      </p>
+‎
+‎      <p>
+‎        Review your information carefully before proceeding.
+‎        Loan approval, interest rates, repayment terms, and eligibility
+‎        depend on the actual lending service and its policies.
+‎      </p>
+‎
+‎      <a class="button" href="#apply">Apply for a Loan</a>
+‎    </section>
+‎
+‎    <section class="card" id="apply">
+‎      <h2>Loan Application</h2>
+‎
+‎      <p>
+‎        Complete this form to preview how a loan application would look.
+‎      </p>
+‎
+‎      <p class="notice">
+‎        Please review your application details before proceeding.
+‎        This website is not yet connected to a system that submits or
+‎        saves applications. Do not enter real personal or financial
+‎        information.
+‎      </p>
+‎
+‎      <form id="loanForm">
+‎        <label for="fullName">Full Name</label>
+‎        <input
+‎          type="text"
+‎          id="fullName"
+‎          placeholder="Enter a sample name"
+‎          required
+‎        >
+‎
+‎        <label for="email">Email Address</label>
+‎        <input
+‎          type="email"
+‎          id="email"
+‎          placeholder="example@email.com"
+‎          required
+‎        >
+‎
+‎        <label for="amount">Requested Loan Amount (PHP ₱)</label>
+‎        <input
+‎          type="number"
+‎          id="amount"
+‎          min="1"
+‎          step="1"
+‎          placeholder="e.g. 10000"
+‎          required
+‎        >
+‎
+‎        <label for="purpose">Purpose of Loan</label>
+‎        <select id="purpose" required>
+‎          <option value="">Select a purpose</option>
+‎          <option value="Business">Business</option>
+‎          <option value="Education">Education</option>
+‎          <option value="Personal">Personal</option>
+‎          <option value="Medical">Medical</option>
+‎          <option value="Other">Other</option>
+‎        </select>
+‎
+‎        <label for="details">Additional Details (Optional)</label>
+‎        <textarea
+‎          id="details"
+‎          placeholder="Enter sample details only"
+‎        ></textarea>
+‎
+‎        <br><br>
+‎
+‎        <button class="button" type="submit">
+‎          Preview Application
+‎        </button>
+‎      </form>
+‎
+‎      <div id="result" role="status" aria-live="polite"></div>
+‎    </section>
+‎  </main>
+‎
+‎  <footer>
+‎    Northstar Loans · Philippines
+‎  </footer>
+‎
+‎  <script>
+‎    const loanForm = document.getElementById("loanForm");
+‎    const result = document.getElementById("result");
+‎
+‎    loanForm.addEventListener("submit", function(event) {
+‎      event.preventDefault();
+‎
+‎      result.style.display = "block";
+‎      result.textContent =
+‎        "Preview complete. Your application has been submitted
+‎      result.scrollIntoView({
+‎        behavior: "smooth",
+‎        block: "nearest"
+‎      });
+‎    });
+‎  </script>
+‎
+‎</body>
+‎</html>
