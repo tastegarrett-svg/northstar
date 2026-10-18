@@ -1,13 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Northstar Admin</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,12 +13,7 @@
       padding: 20px;
       color: #172b43;
     }
-
-    .container {
-      max-width: 750px;
-      margin: 30px auto;
-    }
-
+    .container { max-width: 750px; margin: 30px auto; }
     .card {
       background: white;
       padding: 22px;
@@ -29,9 +21,6 @@
       border-radius: 12px;
       box-shadow: 0 3px 12px #00000010;
     }
-
-    h1, h2 { margin-top: 0; }
-
     input {
       box-sizing: border-box;
       width: 100%;
@@ -41,7 +30,6 @@
       border-radius: 7px;
       font-size: 16px;
     }
-
     button {
       padding: 11px 15px;
       margin: 5px 5px 5px 0;
@@ -52,7 +40,7 @@
       font-weight: bold;
       cursor: pointer;
     }
-
+    button:disabled { opacity: .6; }
     .reject { background: #b42318; }
     .logout { background: #526274; }
     .comment {
@@ -62,16 +50,13 @@
       border-radius: 8px;
       overflow-wrap: anywhere;
     }
-
     .muted { color: #667085; font-size: 14px; }
     #dashboard { display: none; }
     #message { overflow-wrap: anywhere; }
   </style>
 </head>
-
 <body>
 <div class="container">
-
   <section class="card">
     <h1>Northstar Admin</h1>
     <p>Private customer comment review</p>
@@ -80,15 +65,16 @@
 
   <section class="card" id="login">
     <h2>Admin Login</h2>
+    <form id="loginForm">
+      <label for="email">Admin email</label>
+      <input id="email" type="email" autocomplete="username" required>
 
-    <label for="email">Admin email</label>
-    <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        autocomplete="current-password" required>
 
-    <label for="password">Password</label>
-    <input id="password" type="password"
-           autocomplete="current-password" required>
-
-    <button id="loginButton" type="button">Sign In</button>
+      <button type="submit" id="loginButton">Sign In</button>
+    </form>
   </section>
 
   <section class="card" id="dashboard">
@@ -97,24 +83,18 @@
       Review comments before publishing. Approve only genuine
       customer experiences.
     </p>
-
     <button id="refreshButton" type="button">Refresh</button>
-    <button id="logoutButton" class="logout" type="button">
-      Sign Out
-    </button>
-
+    <button id="logoutButton" class="logout" type="button">Sign Out</button>
     <div id="comments"></div>
   </section>
-
 </div>
 
 <script>
   const SUPABASE_URL =
     "https://iffyvqdeyzekenjswnep.supabase.co";
 
-  // Replace this with your Supabase publishable/anon key.
-  // Never put a service-role or secret key in this file.
-  const SUPABASE_PUBLIC_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+  const SUPABASE_PUBLIC_KEY =
+    "sb_publishable_syrD3SMO6BkoITuenEcS8g_bixPmLnB";
 
   const client = window.supabase.createClient(
     SUPABASE_URL,
@@ -155,16 +135,11 @@
 
     login.style.display = "none";
     dashboard.style.display = "block";
-    showMessage("Signed in as an authorized admin.");
     return true;
   }
 
-  async function signIn() {
-    if (SUPABASE_PUBLIC_KEY.includes("PASTE_")) {
-      showMessage("Add your Supabase publishable key first.");
-      return;
-    }
-
+  async function signIn(event) {
+    event.preventDefault();
     showMessage("Signing in...");
 
     const { error } = await client.auth.signInWithPassword({
@@ -178,11 +153,14 @@
     }
 
     if (await checkAdmin()) {
+      showMessage("Admin login successful.");
       await loadComments();
     }
   }
 
   async function loadComments() {
+    if (!(await checkAdmin())) return;
+
     comments.textContent = "Loading comments...";
 
     const { data, error } = await client
@@ -197,8 +175,8 @@
 
     comments.replaceChildren();
 
-    if (!data.length) {
-      comments.textContent = "No comments have been submitted yet.";
+    if (!data || data.length === 0) {
+      comments.textContent = "No comments submitted yet.";
       return;
     }
 
@@ -259,8 +237,8 @@
     await loadComments();
   }
 
-  document.getElementById("loginButton").addEventListener(
-    "click", signIn
+  document.getElementById("loginForm").addEventListener(
+    "submit", signIn
   );
 
   document.getElementById("refreshButton").addEventListener(
@@ -276,10 +254,6 @@
       showMessage("You have signed out.");
     }
   );
-
-  client.auth.onAuthStateChange(() => {
-    // Login state is checked by the explicit sign-in flow.
-  });
 </script>
 </body>
 </html>
