@@ -233,22 +233,57 @@
 ‎    Northstar Loans · Philippines
 ‎  </footer>
 ‎
-‎  <script>
-‎    const loanForm = document.getElementById("loanForm");
-‎    const result = document.getElementById("result");
-‎
-‎    loanForm.addEventListener("submit", function(event) {
-‎      event.preventDefault();
-‎
-‎      result.style.display = "block";
-‎      result.textContent =
-‎        "Preview complete. Your application has been submitted
-‎      result.scrollIntoView({
-‎        behavior: "smooth",
-‎        block: "nearest"
-‎      });
-‎    });
-‎  </script>
+‎ 
+<script>
+  const loanForm = document.getElementById("loanForm");
+  const result = document.getElementById("result");
+
+  loanForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const button = loanForm.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = "Sending...";
+    result.style.display = "block";
+    result.textContent = "Sending your application...";
+
+    try {
+      const response = await fetch(
+        "https://iffyvqdeyzekenjswnep.supabase.co/functions/v1/submit-loan-application",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            full_name: document.getElementById("fullName").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            loan_amount: Number(document.getElementById("amount").value),
+            loan_purpose: document.getElementById("purpose").value,
+            additional_details: document.getElementById("details").value.trim()
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Application could not be saved.");
+      }
+
+      result.textContent = "Application received successfully!";
+      loanForm.reset();
+
+    } catch (error) {
+      result.textContent = error.message || "Something went wrong. Please try again.";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Send Application";
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+</script>
+  
 ‎
 ‎</body>
 ‎</html>
