@@ -6,7 +6,9 @@
   <title>Northstar Loans Philippines</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -23,7 +25,10 @@
       text-align: center;
     }
 
-    header h1 { margin: 0; font-size: 28px; }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
 
     header p {
       margin: 5px 0 0;
@@ -57,7 +62,10 @@
       box-shadow: 0 4px 16px rgba(16,42,67,.07);
     }
 
-    h2 { color: #102a43; margin-top: 0; }
+    h2 {
+      color: #102a43;
+      margin-top: 0;
+    }
 
     .button {
       display: inline-block;
@@ -72,8 +80,14 @@
       cursor: pointer;
     }
 
-    .button:hover { background: #12558b; }
-    .button:disabled { opacity: .65; cursor: wait; }
+    .button:hover {
+      background: #12558b;
+    }
+
+    .button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
 
     label {
       display: block;
@@ -91,7 +105,10 @@
       background: white;
     }
 
-    textarea { min-height: 90px; resize: vertical; }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
 
     .notice {
       background: #fff7e6;
@@ -99,6 +116,34 @@
       padding: 12px;
       border-radius: 6px;
       font-size: 14px;
+    }
+
+    /* Registration fee warning */
+    .fee-notice {
+      background: #fff0f0;
+      border: 2px solid #c62828;
+      border-radius: 10px;
+      padding: 16px;
+      margin: 20px 0;
+      color: #7f1d1d;
+    }
+
+    .fee-notice h3 {
+      color: #b71c1c;
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .fee-amount {
+      font-size: 23px;
+      font-weight: bold;
+      margin: 5px 0 10px;
+    }
+
+    .fee-warning {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 12px 0 5px;
     }
 
     #result {
@@ -110,7 +155,9 @@
       overflow-wrap: anywhere;
     }
 
-    #result.error { background: #ffebee; }
+    #result.error {
+      background: #ffebee;
+    }
 
     footer {
       text-align: center;
@@ -180,8 +227,12 @@
     <div class="logo">♜</div>
     <h1>Welcome to Northstar Loans</h1>
     <p class="country">Philippines</p>
-    <p class="intro">Your loan application journey starts here.</p>
-    <button type="button" id="continueButton">Continue</button>
+    <p class="intro">
+      Your loan application journey starts here.
+    </p>
+    <button type="button" id="continueButton">
+      Continue
+    </button>
   </div>
 
   <header>
@@ -197,15 +248,18 @@
   <main>
     <section class="card" id="home">
       <h2>Your loan journey starts here</h2>
+
       <p>
         Welcome to Northstar Loans. Review the information
         requested before submitting your application.
       </p>
+
       <p>
         Submitting an application does not guarantee approval.
         Any applicable interest rates, fees, and repayment terms
         should be disclosed before you agree to a loan.
       </p>
+
       <a class="button" href="#apply">Apply for a Loan</a>
     </section>
 
@@ -215,10 +269,11 @@
 
       <p class="notice">
         Please check your details before sending.
-        Your application is not approved simply because it is submitted.
+        Submitting an application does not mean it is approved.
       </p>
 
       <form id="loanForm">
+
         <label for="fullName">Full Name</label>
         <input
           type="text"
@@ -268,15 +323,46 @@
         ></textarea>
 
         <p class="notice">
-          Before submitting, make sure you have reviewed the
-          applicable privacy notice explaining how your personal
-          information will be collected, used, stored, and protected.
+          Before submitting, review the applicable privacy notice
+          explaining how your personal information will be
+          collected, used, stored, and protected.
         </p>
 
-        <br>
+        <!-- Registration fee notice -->
+        <div class="fee-notice">
+          <h3>⚠️ Registration Fee: ₱300</h3>
+
+          <p class="fee-amount">
+            ₱300 refundable registration fee
+          </p>
+
+          <p class="fee-warning">
+            ⚠️ Important Payment Warning
+          </p>
+
+          <p>
+            Review and agree to the fee and refund terms before
+            making any payment. The refund conditions and
+            timeframe must be explained clearly before payment.
+          </p>
+
+          <p>
+            If you agree, submit your application and message us
+            on Facebook for the next steps.
+          </p>
+
+          <p>
+            <strong>
+              Payment does not guarantee loan approval.
+              Do not pay until you understand the terms.
+            </strong>
+          </p>
+        </div>
+
         <button class="button" id="submitButton" type="submit">
           Send Application
         </button>
+
       </form>
 
       <div id="result" role="status" aria-live="polite"></div>
@@ -336,15 +422,18 @@
 
         result.textContent =
           "Application received successfully. This is not a loan approval.";
+
         loanForm.reset();
 
       } catch (error) {
         result.classList.add("error");
         result.textContent =
           error.message || "Connection failed. Please try again.";
+
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = "Send Application";
+
         result.scrollIntoView({
           behavior: "smooth",
           block: "nearest"
@@ -354,5 +443,4 @@
   </script>
 
 </body>
-          </html>
-          
+</html>
