@@ -1,289 +1,358 @@
-‎  
-‎<!DOCTYPE html>
-‎<html lang="en">
-‎<head>
-‎  <meta charset="UTF-8">
-‎  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎  <title>Northstar Loans Philippines</title>
-‎
-‎  <style>
-‎    * {
-‎      box-sizing: border-box;
-‎    }
-‎
-‎    body {
-‎      margin: 0;
-‎      font-family: Arial, sans-serif;
-‎      background: #f3f6fb;
-‎      color: #1f2937;
-‎      line-height: 1.6;
-‎    }
-‎
-‎    header {
-‎      background: #102a43;
-‎      color: white;
-‎      padding: 22px 16px;
-‎      text-align: center;
-‎    }
-‎
-‎    header h1 {
-‎      margin: 0;
-‎      font-size: 28px;
-‎    }
-‎
-‎    header p {
-‎      margin: 5px 0 0;
-‎      color: #d9e6f2;
-‎    }
-‎
-‎    nav {
-‎      background: #ffffff;
-‎      padding: 13px;
-‎      text-align: center;
-‎      border-bottom: 1px solid #dce3eb;
-‎    }
-‎
-‎    nav a {
-‎      color: #102a43;
-‎      text-decoration: none;
-‎      font-weight: bold;
-‎    }
-‎
-‎    main {
-‎      max-width: 720px;
-‎      margin: 28px auto;
-‎      padding: 0 16px;
-‎    }
-‎
-‎    .card {
-‎      background: white;
-‎      padding: 24px;
-‎      margin-bottom: 22px;
-‎      border-radius: 14px;
-‎      box-shadow: 0 4px 16px rgba(16, 42, 67, 0.07);
-‎    }
-‎
-‎    h2 {
-‎      color: #102a43;
-‎      margin-top: 0;
-‎    }
-‎
-‎    .button {
-‎      display: inline-block;
-‎      background: #1769aa;
-‎      color: white;
-‎      padding: 12px 20px;
-‎      border: none;
-‎      border-radius: 8px;
-‎      font-size: 16px;
-‎      font-weight: bold;
-‎      text-decoration: none;
-‎      cursor: pointer;
-‎    }
-‎
-‎    .button:hover {
-‎      background: #12558b;
-‎    }
-‎
-‎    label {
-‎      display: block;
-‎      margin-top: 16px;
-‎      margin-bottom: 6px;
-‎      font-weight: bold;
-‎    }
-‎
-‎    input,
-‎    select,
-‎    textarea {
-‎      width: 100%;
-‎      padding: 12px;
-‎      border: 1px solid #cbd5e1;
-‎      border-radius: 8px;
-‎      font-size: 16px;
-‎      background: white;
-‎    }
-‎
-‎    textarea {
-‎      min-height: 90px;
-‎      resize: vertical;
-‎    }
-‎
-‎    .notice {
-‎      background: #fff7e6;
-‎      border-left: 4px solid #d99000;
-‎      padding: 12px;
-‎      border-radius: 6px;
-‎      font-size: 14px;
-‎    }
-‎
-‎    #result {
-‎      display: none;
-‎      margin-top: 18px;
-‎      padding: 14px;
-‎      background: #e8f5e9;
-‎      border-radius: 8px;
-‎    }
-‎
-‎    footer {
-‎      text-align: center;
-‎      padding: 24px 16px;
-‎      color: #64748b;
-‎      font-size: 14px;
-‎    }
-‎  </style>
-‎</head>
-‎
-‎<body>
-‎
-‎  <header>
-‎    <h1>Northstar Loans</h1>
-‎    <p>Loan application information for the Philippines</p>
-‎  </header>
-‎
-‎  <nav>
-‎    <a href="#home">Home</a> |
-‎    <a href="#apply">Apply for a Loan</a>
-‎  </nav>
-‎
-‎  <main>
-‎    <section class="card" id="home">
-‎      <h2>Your loan journey starts here</h2>
-‎
-‎      <p>
-‎        Welcome to Northstar Loans. Explore our loan application
-‎        preview and prepare the details you may need for an application.
-‎      </p>
-‎
-‎      <p>
-‎        Review your information carefully before proceeding.
-‎        Loan approval, interest rates, repayment terms, and fee so that your loan can be approved immediately 
-‎       .
-‎      </p>
-‎
-‎      <a class="button" href="#apply">Apply for a Loan</a>
-‎    </section>
-‎
-‎    <section class="card" id="apply">
-‎      <h2>Loan Application</h2>
-‎
-‎      <p>
-‎        Complete this form to preview how a loan application would look.
-‎      </p>
-‎
-‎      <p class="notice">
-‎        Please review your application details before proceeding.
-‎        Enjoy our loan.
-‎      </p>
-‎
-‎      <form id="loanForm">
-‎        <label for="fullName">Full Name</label>
-‎        <input
-‎          type="text"
-‎          id="fullName"
-‎          placeholder="Enter a sample name"
-‎          required
-‎        >
-‎
-‎        <label for="email">Email Address</label>
-‎        <input
-‎          type="email"
-‎          id="email"
-‎          placeholder="example@email.com"
-‎          required
-‎        >
-‎
-‎        <label for="amount">Requested Loan Amount (PHP ₱)</label>
-‎        <input
-‎          type="number"
-‎          id="amount"
-‎          min="1"
-‎          step="1"
-‎          placeholder="e.g. 10000"
-‎          required
-‎        >
-‎
-‎        <label for="purpose">Purpose of Loan</label>
-‎        <select id="purpose" required>
-‎          <option value="">Select a purpose</option>
-‎          <option value="Business">Business</option>
-‎          <option value="Education">Education</option>
-‎          <option value="Personal">Personal</option>
-‎          <option value="Medical">Medical</option>
-‎          <option value="Other">Other</option>
-‎        </select>
-‎
-‎        <label for="details">Additional Details (Optional)</label>
-‎        <textarea
-‎          id="details"
-‎          placeholder="Enter sample details only"
-‎        ></textarea>
-‎
-‎        <br><br>
-‎
-‎        <button class="button" type="submit">
-‎          Preview Application
-‎        </button>
-‎      </form>
-‎
-‎      <div id="result" role="status" aria-live="polite"></div>
-‎    </section>
-‎  </main>
-‎
-‎  <footer>
-‎    Northstar Loans · Philippines
-‎  </footer>
-‎
-‎ 
-<script>
-  const loanForm = document.getElementById("loanForm");
-  const result = document.getElementById("result");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northstar Loans Philippines</title>
 
-  loanForm.addEventListener("submit", async function(event) {
-    event.preventDefault();
+  <style>
+    * { box-sizing: border-box; }
 
-    const button = loanForm.querySelector('button[type="submit"]');
-    button.disabled = true;
-    button.textContent = "Sending...";
-    result.style.display = "block";
-    result.textContent = "Sending your application...";
-
-    try {
-      const response = await fetch(
-        "https://iffyvqdeyzekenjswnep.supabase.co/functions/v1/submit-loan-application",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            full_name: document.getElementById("fullName").value.trim(),
-            email: document.getElementById("email").value.trim(),
-            loan_amount: Number(document.getElementById("amount").value),
-            loan_purpose: document.getElementById("purpose").value,
-            additional_details: document.getElementById("details").value.trim()
-          })
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Application could not be saved.");
-      }
-
-      result.textContent = "Application received successfully!";
-      loanForm.reset();
-
-    } catch (error) {
-      result.textContent = error.message || "Something went wrong. Please try again.";
-    } finally {
-      button.disabled = false;
-      button.textContent = "Send Application";
-      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1f2937;
+      line-height: 1.6;
     }
-  });
-</script>
-  
-‎
-‎</body>
-‎</html>
+
+    header {
+      background: #102a43;
+      color: white;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    header h1 { margin: 0; font-size: 28px; }
+
+    header p {
+      margin: 5px 0 0;
+      color: #d9e6f2;
+    }
+
+    nav {
+      background: white;
+      padding: 13px;
+      text-align: center;
+      border-bottom: 1px solid #dce3eb;
+    }
+
+    nav a {
+      color: #102a43;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 28px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 24px;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(16,42,67,.07);
+    }
+
+    h2 { color: #102a43; margin-top: 0; }
+
+    .button {
+      display: inline-block;
+      background: #1769aa;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button:hover { background: #12558b; }
+    .button:disabled { opacity: .65; cursor: wait; }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    .notice {
+      background: #fff7e6;
+      border-left: 4px solid #d99000;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    #result {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      background: #e8f5e9;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    #result.error { background: #ffebee; }
+
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    #welcomeScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #102a43;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 28px;
+      font-family: Arial, sans-serif;
+    }
+
+    #welcomeScreen .logo {
+      font-size: 54px;
+      color: #c9a44c;
+      margin-bottom: 20px;
+    }
+
+    #welcomeScreen h1 {
+      font-size: 30px;
+      margin: 0 0 12px;
+    }
+
+    #welcomeScreen p {
+      line-height: 1.6;
+    }
+
+    #welcomeScreen .country {
+      color: #d9e6f2;
+      font-size: 17px;
+      margin: 0 0 12px;
+    }
+
+    #welcomeScreen .intro {
+      font-size: 16px;
+      margin: 0 0 30px;
+    }
+
+    #welcomeScreen button {
+      background: #1769aa;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 35px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Welcome screen -->
+  <div id="welcomeScreen">
+    <div class="logo">♜</div>
+    <h1>Welcome to Northstar Loans</h1>
+    <p class="country">Philippines</p>
+    <p class="intro">Your loan application journey starts here.</p>
+    <button type="button" id="continueButton">Continue</button>
+  </div>
+
+  <header>
+    <h1>Northstar Loans</h1>
+    <p>Loan application information for the Philippines</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a> |
+    <a href="#apply">Apply for a Loan</a>
+  </nav>
+
+  <main>
+    <section class="card" id="home">
+      <h2>Your loan journey starts here</h2>
+      <p>
+        Welcome to Northstar Loans. Review the information
+        requested before submitting your application.
+      </p>
+      <p>
+        Submitting an application does not guarantee approval.
+        Any applicable interest rates, fees, and repayment terms
+        should be disclosed before you agree to a loan.
+      </p>
+      <a class="button" href="#apply">Apply for a Loan</a>
+    </section>
+
+    <section class="card" id="apply">
+      <h2>Loan Application</h2>
+      <p>Complete the form below to submit your application.</p>
+
+      <p class="notice">
+        Please check your details before sending.
+        Your application is not approved simply because it is submitted.
+      </p>
+
+      <form id="loanForm">
+        <label for="fullName">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          maxlength="120"
+          autocomplete="name"
+          placeholder="Enter your full name"
+          required
+        >
+
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="example@email.com"
+          required
+        >
+
+        <label for="amount">Requested Loan Amount (PHP ₱)</label>
+        <input
+          type="number"
+          id="amount"
+          min="1"
+          max="1000000000"
+          step="1"
+          placeholder="e.g. 10000"
+          required
+        >
+
+        <label for="purpose">Purpose of Loan</label>
+        <select id="purpose" required>
+          <option value="">Select a purpose</option>
+          <option value="Business">Business</option>
+          <option value="Education">Education</option>
+          <option value="Personal">Personal</option>
+          <option value="Medical">Medical</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="details">Additional Details (Optional)</label>
+        <textarea
+          id="details"
+          maxlength="2000"
+          placeholder="Enter additional details"
+        ></textarea>
+
+        <p class="notice">
+          Before submitting, make sure you have reviewed the
+          applicable privacy notice explaining how your personal
+          information will be collected, used, stored, and protected.
+        </p>
+
+        <br>
+        <button class="button" id="submitButton" type="submit">
+          Send Application
+        </button>
+      </form>
+
+      <div id="result" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    Northstar Loans · Philippines
+  </footer>
+
+  <script>
+    const loanForm = document.getElementById("loanForm");
+    const result = document.getElementById("result");
+    const submitButton = document.getElementById("submitButton");
+
+    document.getElementById("continueButton").addEventListener(
+      "click",
+      function () {
+        document.getElementById("welcomeScreen").style.display = "none";
+      }
+    );
+
+    loanForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+      result.style.display = "block";
+      result.classList.remove("error");
+      result.textContent = "Sending your application...";
+
+      try {
+        const response = await fetch(
+          "https://iffyvqdeyzekenjswnep.supabase.co/functions/v1/submit-loan-application",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              full_name: document.getElementById("fullName").value.trim(),
+              email: document.getElementById("email").value.trim(),
+              loan_amount: Number(document.getElementById("amount").value),
+              loan_purpose: document.getElementById("purpose").value,
+              additional_details: document.getElementById("details").value.trim()
+            })
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error || "Unable to save your application. Please try again."
+          );
+        }
+
+        result.textContent =
+          "Application received successfully. This is not a loan approval.";
+        loanForm.reset();
+
+      } catch (error) {
+        result.classList.add("error");
+        result.textContent =
+          error.message || "Connection failed. Please try again.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Application";
+        result.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      }
+    });
+  </script>
+
+</body>
+          </html>
+          
