@@ -1,124 +1,54 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#102a43">
-<meta name="description" content="Northstar Loans Philippines — loan application information and application review.">
-<title>Northstar Loans Philippines</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--navy:#102a43;--blue:#1769aa;--muted:#607286;--line:#dce5ee;--page:#f3f6fb}
-*{box-sizing:border-box}body{margin:0;font:16px/1.6 Arial,sans-serif;color:#1f2937;background:var(--page)}button,input,select,textarea{font:inherit}
-.wrap{width:min(100% - 32px,1040px);margin:auto}.header{background:linear-gradient(135deg,#102a43,#163d5b);color:white;padding:24px 0 40px}.brand{font-size:25px;font-weight:bold}.tag{color:#d9e6f2}.hero{padding:25px 0;display:grid;grid-template-columns:1fr 260px;gap:24px}.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15}.fee-panel{background:#ffffff15;border:1px solid #ffffff44;border-radius:14px;padding:18px}.fee{font-size:30px;font-weight:bold}.button{display:inline-block;background:var(--blue);color:white;text-decoration:none;border:0;border-radius:9px;padding:12px 18px;font-weight:bold;cursor:pointer}.button:hover{background:#12558b}.outline{background:transparent;border:1px solid #ffffff80;margin-left:8px}
-nav{background:white;border-bottom:1px solid var(--line)}nav .wrap{display:flex;gap:20px;flex-wrap:wrap;padding:12px 0}nav a{color:var(--navy);font-weight:bold;text-decoration:none}
-.card{background:white;border:1px solid #e7edf4;border-radius:16px;padding:clamp(18px,4vw,30px);margin:22px auto;box-shadow:0 5px 20px #102a430d}.card h2{color:var(--navy);margin-top:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.field{min-width:0}label{display:block;margin:13px 0 5px;font-weight:bold;font-size:14px}input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;background:white;min-height:44px}textarea{min-height:90px}.subsection{border-top:1px solid var(--line);padding-top:18px;margin-top:22px}.check{display:flex;gap:10px;align-items:flex-start;margin:14px 0}.check input{width:18px;min-height:18px;margin-top:5px}.check label{font-weight:normal;margin:0}.notice{padding:12px;background:#fff7e6;border-left:4px solid #d99000;border-radius:6px}.fee-notice{background:#fff8f7;border:1px solid #f1c8c4;border-radius:10px;padding:16px;color:#6f2424}.actions{margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.small{font-size:13px;color:var(--muted)}#result,#commentMessage{display:none;padding:14px;margin-top:16px;background:#e8f5e9;border-radius:8px;overflow-wrap:anywhere}#result.error,#commentMessage.error{background:#ffebee;color:#8b1e2d}.comment-card{background:white;border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px;overflow-wrap:anywhere}.comment-date{font-size:12px;color:var(--muted)}footer{background:var(--navy);color:#d9e6f2;padding:25px 0;margin-top:25px;font-size:13px}
-#welcomeScreen{position:fixed;inset:0;z-index:9999;background:linear-gradient(145deg,#102a43,#163d5b);color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}#welcomeScreen .logo{font-size:48px;color:#c9a44c}#welcomeScreen h1{font-size:clamp(26px,6vw,34px)}@media(max-width:700px){.hero,.grid{grid-template-columns:1fr}.outline{margin:8px 0 0}.hero .button{margin-bottom:8px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northstar Loans</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #243b53;
+    }
+    main {
+      max-width: 520px;
+      width: 100%;
+      padding: 36px 28px;
+      text-align: center;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(16,42,67,.10);
+    }
+    .symbol {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8eef5;
+      color: #102a43;
+      font-size: 32px;
+    }
+    h1 { color: #102a43; }
+    p { line-height: 1.7; }
+    .small { color: #627d98; font-size: 13px; margin-top: 22px; }
+  </style>
 </head>
 <body>
-<div id="welcomeScreen" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-<div class="logo" aria-hidden="true">♜</div><h1 id="welcomeTitle">Welcome to Northstar Loans</h1><p class="tag">Philippines</p><p>A clear place to begin your loan application.</p>
-<button class="button" type="button" id="continueButton">Continue</button>
-</div>
-<header class="header"><div class="wrap"><div class="brand">♜ Northstar Loans</div><div class="tag">Loan application information · Philippines</div>
-<div class="hero"><div><p> A clear start for your plans</p><h1>Take the next step with a clear loan application.</h1><p>Review the information requested, provide accurate details, and submit your application for individual review.</p><a class="button" href="#apply">Start an application →</a><a class="button outline" href="#how-it-works">How it works</a></div>
-<aside .</p></aside></div></div></header>
-<nav><div class="wrap"><a href="#home">Home</a><a href="#how-it-works">How it works</a><a href="#apply">Loan application</a><a href="#customer-comments">Customer experiences</a></div></nav>
-<main class="wrap">
-<section class="card" id="home"><h2>Plan with the details in view</h2><p class="muted">Use this form to provide information needed for an initial review. Please enter accurate information and only share details needed for this purpose.</p><div class="grid"><div><h3>📝 Complete your details</h3><p class="muted">Provide contact, income, and loan information for review.</p></div><div><h3>🔎 Application review</h3><p class="muted">Submission alone is not an approval.</p></div></div></section>
-<section class="card" id="how-it-works"><h2>How it works</h2><ol><li>Complete the application form accurately.</li><li>Submit your request for review.</li><li>Wait for communication about the review outcome and terms.</li></ol><p class="notice">Review loan amount, repayment schedule, interest, and all terms in writing before accepting a loan.</p></section>
-<section class="card" id="apply"><h2>Loan Application</h2><p class="notice">Check your details before sending. Never enter passwords, PINs, one-time codes, or full payment-card details.</p>
-<form id="loanForm">
-<div class="subsection" style="margin-top:0;border:0;padding-top:0"><h3>1. Personal information</h3><div class="grid">
-<div class="field"><label for="fullName">Full legal name</label><input id="fullName" maxlength="120" autocomplete="name" required></div>
-<div class="field"><label for="birthDate">Date of birth</label><input type="date" id="birthDate" max="2008-10-20" autocomplete="bday" required></div>
-<div class="field"><label for="phone">Mobile number</label><input type="tel" id="phone" maxlength="30" placeholder="e.g. +63 9XX XXX XXXX" required></div>
-<div class="field"><label for="email">Email address</label><input type="email" id="email" maxlength="254" required></div>
-<div class="field" style="grid-column:1/-1"><label for="address">Residential address</label><textarea id="address" maxlength="500" required></textarea></div></div></div>
-<div class="subsection"><h3>2. Employment and income</h3><div class="grid">
-<div><label for="employmentStatus">Employment status</label><select id="employmentStatus" required><option value="">Select status</option><option>Employed</option><option>Self-employed</option><option>Business owner</option><option>Contract or freelance</option><option>Retired</option><option>Unemployed</option><option>Other</option></select></div>
-<div><label for="occupation">Occupation or source of income</label><input id="occupation" maxlength="120" required></div>
-<div><label for="monthlyIncome">Approximate monthly income (PHP ₱)</label><input type="number" id="monthlyIncome" min="0" max="1000000000" step="1" required></div>
-<div><label for="otherIncome">Other monthly income (PHP ₱, optional)</label><input type="number" id="otherIncome" min="0" max="1000000000" step="1"></div></div></div>
-<div class="subsection"><h3>3. Loan request</h3><div class="grid">
-<div><label for="amount">Requested loan amount (PHP ₱)</label><input type="number" id="amount" min="1" max="1000000000" step="1" required></div>
-<div><label for="purpose">Purpose of loan</label><select id="purpose" required><option value="">Select purpose</option><option>Business</option><option>Education</option><option>Personal</option><option>Medical</option><option>Home or repairs</option><option>Emergency</option><option>Debt consolidation</option><option>Other</option></select></div>
-<div><label for="repaymentPeriod">Preferred repayment period</label><select id="repaymentPeriod" required><option value="">Select period</option><option>1 month</option><option>3 months</option><option>6 months</option><option>9 months</option><option>12 months</option><option>More than 12 months</option><option>Not sure yet</option></select></div>
-<div><label for="repaymentFrequency">Preferred repayment frequency</label><select id="repaymentFrequency" required><option value="">Select frequency</option><option>Weekly</option><option>Every two weeks</option><option>Monthly</option><option>To be discussed</option></select></div>
-<div><label for="existingLoans">Do you currently repay another loan?</label><select id="existingLoans" required><option value="">Select answer</option><option>No</option><option>Yes</option><option>Prefer not to say</option></select></div>
-<div><label for="monthlyDebtPayments">Approximate monthly payments on other loans (PHP ₱, optional)</label><input type="number" id="monthlyDebtPayments" min="0" max="1000000000" step="1"></div></div>
-<label for="details">Additional details (optional)</label><textarea id="details" maxlength="2000" placeholder="Do not include passwords, PINs, or one-time codes."></textarea></div>
-<div class="subsection"><h3>4. Review and consent</h3><div class="fee-notice"><h3>Registration fee: ₱300</h3><p style="font-size:26px;font-weight:bold">₱300</p><p>This fee is for registration only. If the application is declined, the registration fee will be refunded. Under the stated policy, no additional fees are charged if the loan is approved.</p></div>
-<div class="check"><input type="checkbox" id="privacyConsent" required><label for="privacyConsent">I acknowledge that my information will be used to review and respond to my application and that I have access to the applicable privacy notice.</label></div>
-<div class="check"><input type="checkbox" id="accuracyConsent" required><label for="accuracyConsent">I confirm that the information provided is accurate to the best of my knowledge.</label></div>
-<div class="check"><input type="checkbox" id="termsConsent" required><label for="termsConsent">I understand that this is an application for review and does not itself confirm approval or disbursement.</label></div></div>
-<div class="actions"><button class="button" id="submitButton" type="submit">Send application</button><span class="small">Please review all entries before submitting.</span></div>
-</form><div id="result" role="status" aria-live="polite"></div></section>
-<section class="card" id="telegram-contact" style="text-align:center"><p class="small">OFFICIAL SUPPORT</p><h2>Need Help with Your Application?</h2><p class="muted">Contact our official Telegram account with questions about your application. Verify payment instructions before making any payment.</p><a class="button" href="https://t.me/NorthstarLoansSupport" target="_blank" rel="noopener noreferrer">Contact Us on Telegram</a><p class="small">Never send money without verifying payment instructions. Payment does not guarantee loan approval.</p></section>
-<section class="card" id="customer-comments"><h2>Customer Experiences</h2><p class="muted">Share your genuine experience. Comments are reviewed before publication. Do not include financial account details or other sensitive personal information.</p>
-<form id="commentForm"><label for="commentName">Your name</label><input id="commentName" maxlength="80" required><label for="commentText">Your comment</label><textarea id="commentText" maxlength="1000" rows="4" required></textarea><div class="actions"><button class="button" id="commentButton" type="submit">Submit comment</button></div></form>
-<div id="commentMessage" role="status" aria-live="polite"></div><h3>Approved comments</h3><div id="approvedComments" aria-live="polite">Loading comments...</div></section>
-</main><footer><div class="wrap">Northstar Loans · Philippines — Applications are subject to review and applicable terms.</div></footer>
-<script>
-"use strict";
-const SUPABASE_URL="https://iffyvqdeyzekenjswnep.supabase.co";
-const SUPABASE_PUBLIC_KEY="sb_publishable_syrD3SMO6BkoITuenEcS8g_bixPmLnB";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLIC_KEY);
-document.getElementById("continueButton").addEventListener("click",()=>{document.getElementById("welcomeScreen").style.display="none";});
-const loanForm=document.getElementById("loanForm"),result=document.getElementById("result"),submitButton=document.getElementById("submitButton");
-loanForm.addEventListener("submit",async event=>{
-event.preventDefault();
-const requestedAmount=Number(document.getElementById("amount").value),monthlyIncome=Number(document.getElementById("monthlyIncome").value);
-const otherIncomeValue=document.getElementById("otherIncome").value,monthlyDebtValue=document.getElementById("monthlyDebtPayments").value;
-if(!Number.isFinite(requestedAmount)||requestedAmount<=0||!Number.isFinite(monthlyIncome)||monthlyIncome<0){result.style.display="block";result.classList.add("error");result.textContent="Please enter valid amounts in the loan and income fields.";return;}
-submitButton.disabled=true;submitButton.textContent="Sending...";result.style.display="block";result.classList.remove("error");result.textContent="Sending your application...";
-const additionalDetails=[
-"Date of birth: "+document.getElementById("birthDate").value,
-"Mobile number: "+document.getElementById("phone").value.trim(),
-"Residential address: "+document.getElementById("address").value.trim(),
-"Employment status: "+document.getElementById("employmentStatus").value,
-"Occupation/source of income: "+document.getElementById("occupation").value.trim(),
-"Approximate monthly income (PHP): "+monthlyIncome,
-"Other monthly income (PHP): "+(otherIncomeValue===""?"Not provided":Number(otherIncomeValue)),
-"Preferred repayment period: "+document.getElementById("repaymentPeriod").value,
-"Preferred repayment frequency: "+document.getElementById("repaymentFrequency").value,
-"Currently repaying another loan: "+document.getElementById("existingLoans").value,
-"Approximate monthly payments on other loans (PHP): "+(monthlyDebtValue===""?"Not provided":Number(monthlyDebtValue)),
-"Privacy acknowledgement: Yes","Information accuracy confirmation: Yes","Application review acknowledgement: Yes",
-"Applicant's additional details: "+document.getElementById("details").value.trim()
-].join("\n");
-try{
-const response=await fetch(SUPABASE_URL+"/functions/v1/submit-loan-application",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-full_name:document.getElementById("fullName").value.trim(),email:document.getElementById("email").value.trim(),loan_amount:requestedAmount,loan_purpose:document.getElementById("purpose").value,additional_details:additionalDetails
-})});
-let data={};try{data=await response.json();}catch(_){data={};}
-if(!response.ok)throw new Error(data.error||"Unable to save your application. Please try again.");
-result.textContent="Application received successfully. This confirms receipt only, not loan approval.";loanForm.reset();
-}catch(error){result.classList.add("error");result.textContent=error.message||"Connection failed. Please try again.";}
-finally{submitButton.disabled=false;submitButton.textContent="Send application";result.scrollIntoView({behavior:"smooth",block:"nearest"});}
-});
-const commentForm=document.getElementById("commentForm"),commentButton=document.getElementById("commentButton"),commentMessage=document.getElementById("commentMessage"),approvedComments=document.getElementById("approvedComments");
-function showCommentMessage(text,isError=false){commentMessage.style.display="block";commentMessage.classList.toggle("error",isError);commentMessage.textContent=text;}
-async function loadApprovedComments(){
-approvedComments.textContent="Loading comments...";
-try{
-const {data,error}=await db.from("customer_comments").select("customer_name, comment, created_at").eq("status","approved").order("created_at",{ascending:false});
-if(error)throw error;approvedComments.replaceChildren();
-if(!data||data.length===0){approvedComments.textContent="No approved comments yet.";return;}
-data.forEach(item=>{const card=document.createElement("article");card.className="comment-card";const name=document.createElement("strong");name.textContent=item.customer_name;const body=document.createElement("p");body.textContent=item.comment;const date=document.createElement("p");date.className="comment-date";date.textContent=new Date(item.created_at).toLocaleDateString();card.append(name,body,date);approvedComments.append(card);});
-}catch(error){approvedComments.textContent="Comments could not be loaded. Please try again later.";console.error("Comment loading error:",error);}
-}
-commentForm.addEventListener("submit",async event=>{
-event.preventDefault();const customerName=document.getElementById("commentName").value.trim(),commentText=document.getElementById("commentText").value.trim();
-if(!customerName||!commentText){showCommentMessage("Please complete both fields.",true);return;}
-commentButton.disabled=true;commentButton.textContent="Submitting...";showCommentMessage("Submitting your comment...");
-try{
-const {error}=await db.from("customer_comments").insert({customer_name:customerName,comment:commentText,status:"pending"});if(error)throw error;
-commentForm.reset();showCommentMessage("Thank you! Your comment was submitted and is awaiting review. It will appear publicly only if approved.");
-}catch(error){console.error("Comment submission error:",error);showCommentMessage("Your comment could not be submitted. Please try again later.",true);}
-finally{commentButton.disabled=false;commentButton.textContent="Submit comment";}
-});
-loadApprovedComments();
-</script>
-</body></html>
-  
+  <main>
+    <div class="symbol">✦</div>
+    <h1>Northstar Loans</h1>
+    <h2>Service Temporarily Unavailable</h2>
+    <p>We're unable to accept applications at this time. Please check back later.</p>
+    <p class="small">Thank you for your understanding.</p>
+  </main>
+</body>
+</html>
